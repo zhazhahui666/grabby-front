@@ -3,13 +3,15 @@
     <card>
       <Row>
         <Col span="3">
-        <Menu :active-name="currentProcess.id" style="height:90vh" :open-names="openName" v-if="dataList && dataList.length" width="100%" @on-select="MenuSelectChange">
-          <Submenu :name="item.id" v-for="(item,index) in dataList" :key="index">
-            <template slot="title">
+        <Menu :active-name="currentProcess.id" style="height:90vh" :open-names="openName"
+          v-if="dataList && dataList.length" width="100%" @on-select="MenuSelectChange">
+          <Submenu :name="item.id" v-for="(item,index) in dataList" :key="index" >
+            <template slot="title" >
               <Icon type="ios-folder-open-outline" /> {{item.name}}
             </template>
             <div v-if="item.processDefinitionDtos">
-              <MenuItem :name="def.id" v-for="def in item.processDefinitionDtos" :key="def.id" style="padding:10px 35px">
+              <MenuItem :name="def.id" v-for="def in item.processDefinitionDtos"
+                :key="def.id" style="padding:7px 35px">
               <Icon type="md-document" /> {{def.name}}
               </MenuItem>
             </div>
@@ -22,7 +24,8 @@
             <Button type="primary" @click="handDeploy">发布</Button>
           </TabPane>
           <TabPane label="图形编辑" icon="logo-tux" name="diagram">
-            <iframe id="iframe" :src="modelerUrl" frameborder="0" width="100%" height="800px" scrolling="auto"></iframe>
+            <iframe id="iframe" :src="modelerUrl" frameborder="0" width="100%"
+              height="800px" scrolling="auto"></iframe>
           </TabPane>
           <TabPane label="节点设置" icon="logo-windows" name="node">
             <!-- 数据表格 -->
@@ -32,7 +35,9 @@
 
             <!-- 分页 -->
             <Row type="flex" justify="end" class="page">
-              <Page :total="nodeConfig.totalCount" size="small" show-elevator show-sizer show-total @on-change="changeNodePage" @on-page-size-change="changeNodePageSize" />
+              <Page :total="nodeConfig.totalCount" size="small" show-elevator
+                show-sizer show-total @on-change="changeNodePage"
+                @on-page-size-change="changeNodePageSize" />
             </Row>
 
           </TabPane>
@@ -40,22 +45,27 @@
             出口规则功能是对流程的流向进行条件控制，待开发中
           </TabPane>
 
-          <Button type="error" v-if="this.currentProcess" icon="md-trash" slot="extra" @click="deleteProcessModal = true" style="margin-right:10px">删除流程</Button>
+          <Button type="error" v-if="this.currentProcess" icon="md-trash" slot="extra"
+            @click="deleteProcessModal = true" style="margin-right:10px">删除流程</Button>
           <Button type="primary" icon="md-add" slot="extra" @click="showProcessModal">添加流程</Button>
         </Tabs>
         </Col>
       </Row>
     </card>
 
-    <Modal v-model="handlerModel" title="操作人设置" loading @on-ok="setHandlerOk" @on-cancel="setHandlerCancel" :closable="false" ok-text="保存">
+    <Modal v-model="handlerModel" title="操作人设置" loading @on-ok="setHandlerOk"
+      @on-cancel="setHandlerCancel" :closable="false" ok-text="保存">
 
       <Form :model="nodeConfig.currentNode" :label-width="80">
         <FormItem label="节点名称：">
           <span>{{nodeConfig.currentNode.actName}}</span>
         </FormItem>
         <FormItem label="角色选择：">
-          <Select style="width:200px" label-in-value v-model="nodeConfig.roleSelectId" filterable remote clearable :remote-method="getRoleList" @on-change="selectRoleChange" :loading="nodeConfig.loading">
-            <Option v-for="(role, index) in nodeConfig.roleList" :value="role.id" :key="role.id">{{role.name}}</Option>
+          <Select style="width:200px" label-in-value v-model="nodeConfig.roleSelectId"
+            filterable remote clearable :remote-method="getRoleList" @on-change="selectRoleChange"
+            :loading="nodeConfig.loading">
+            <Option v-for="(role, index) in nodeConfig.roleList" :value="role.id"
+              :key="role.id">{{role.name}}</Option>
           </Select>
         </FormItem>
 
@@ -86,7 +96,8 @@
         </FormItem>
         <FormItem label="类别：">
           <Select v-model="process.categoryId" style="width:300px">
-            <Option v-for="item in dataList" :value="item.id" :key="item.id">{{ item.name }}</Option>
+            <Option v-for="item in dataList" :value="item.id" :key="item.id">{{
+              item.name }}</Option>
           </Select>
         </FormItem>
       </Form>
@@ -254,7 +265,7 @@ export default {
           && this.dataList[0].processDefinitionDtos.length) {
           this.openName.push(this.dataList[0].id)
           this.currentProcess = this.dataList[0].processDefinitionDtos[0]
-          this.modelerUrl = `//127.0.0.1:8080/modeler.html?modelId=${this.currentProcess.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
+          this.modelerUrl = `//192.168.0.100:8080/modeler.html?modelId=${this.currentProcess.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
           this.initTabContent()
         }
       })
@@ -362,7 +373,7 @@ export default {
         let process = item.processDefinitionDtos.find(el => el.id === processId)
         if (process) {
           this.currentProcess = process
-          this.modelerUrl = `//127.0.0.1:8080/modeler.html?modelId=${process.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
+          this.modelerUrl = `//192.168.0.100:8080/modeler.html?modelId=${process.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
         }
       })
       this.initTabContent()

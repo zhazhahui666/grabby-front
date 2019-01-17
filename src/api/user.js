@@ -39,13 +39,7 @@ export const addUser = (user) => {
   })
 }
 
-export const getUserByRole = (params) => {
-  return axios.request({
-    url: 'user/get_user_by_role',
-    method: 'get',
-    params
-  })
-}
+
 
 export const resetPassword = (uid) => {
   return axios.request({

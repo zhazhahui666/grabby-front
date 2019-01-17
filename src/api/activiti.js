@@ -140,3 +140,11 @@ export const deleteProcess = (processId) => {
     method: 'get'
   })
 }
+
+//获取流程图
+export const getProcessImage = (processInsId) => {
+  return axios.request({
+    url: `act-process/get-process-image/${processInsId}`,
+    method: 'get'
+  })
+}

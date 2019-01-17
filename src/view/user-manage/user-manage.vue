@@ -3,8 +3,8 @@
     <card>
       <!-- 搜索区域 -->
       <Row>
-            用户名：<Input v-model="searchForm.username" placeholder="请输入用户名" style="width: auto"></Input>
-            手机号：<Input v-model="searchForm.mobile" placeholder="请输入手机号" style="width: auto"></Input>
+            用户名：<Input v-model="searchForm.username" placeholder="请输入用户名" style="width: auto" />
+            手机号：<Input v-model="searchForm.mobile" placeholder="请输入手机号" style="width: auto" />
             <Button type="primary" @click="handSearch">搜索</Button>
       </Row>
 
@@ -100,34 +100,34 @@ export default {
         align: 'center',
         render: (h, params) => {
           return h('div', [
-            h('Button', {
-              props: {
-                type: 'primary',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px'
-              },
-              on: {
-                click: () => {
-                  this.showUser(params)
-                }
-              }
-            }, '编辑'),
-            h('Button', {
-              props: {
-                type: 'error',
-                size: 'small'
-              },
-              style: {
-                marginRight: '5px'
-              },
-              on: {
-                click: () => {
-                  this.remove(params.index)
-                }
-              }
-            }, '删除'),
+            // h('Button', {
+            //   props: {
+            //     type: 'primary',
+            //     size: 'small'
+            //   },
+            //   style: {
+            //     marginRight: '5px'
+            //   },
+            //   on: {
+            //     click: () => {
+            //       this.showUser(params)
+            //     }
+            //   }
+            // }, '编辑'),
+            // h('Button', {
+            //   props: {
+            //     type: 'error',
+            //     size: 'small'
+            //   },
+            //   style: {
+            //     marginRight: '5px'
+            //   },
+            //   on: {
+            //     click: () => {
+            //       this.remove(params.index)
+            //     }
+            //   }
+            // }, '删除'),
             h('Button', {
               props: {
                 type: 'primary',

@@ -7,3 +7,10 @@ export const getPermissionPage = (params) => {
     params
   })
 }
+
+export const getPermissionByGroup = () => {
+  return axios.request({
+    url: 'permission/get-permission-by-group',
+    method: 'get',
+  })
+}

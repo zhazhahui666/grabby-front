@@ -4,7 +4,7 @@
       <!-- 搜索区域 -->
       <Row>
         用户名：
-        <Input v-model="searchForm.name" placeholder="请输入用户名" style="width: auto"></Input>
+        <Input v-model="searchForm.name" placeholder="请输入用户名" style="width: auto" />
         <Button type="primary" @click="handSearch">搜索</Button>
       </Row>
       <Divider style="margin:12px 0" />
