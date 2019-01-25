@@ -21,7 +21,7 @@ module.exports = {
     port: 1000,
     proxy: {
       '/api': {
-        target: 'http://192.168.0.100:8080', // 请求本地 需要xboot后台项目
+        target: 'http://127.0.0.1:8080',
         pathRewrite: {
           '^/api': ''
         },

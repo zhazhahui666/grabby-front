@@ -265,7 +265,7 @@ export default {
           && this.dataList[0].processDefinitionDtos.length) {
           this.openName.push(this.dataList[0].id)
           this.currentProcess = this.dataList[0].processDefinitionDtos[0]
-          this.modelerUrl = `//192.168.0.100:8080/modeler.html?modelId=${this.currentProcess.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
+          this.modelerUrl = `//127.0.0.1:8080/modeler.html?modelId=${this.currentProcess.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
           this.initTabContent()
         }
       })
@@ -373,7 +373,7 @@ export default {
         let process = item.processDefinitionDtos.find(el => el.id === processId)
         if (process) {
           this.currentProcess = process
-          this.modelerUrl = `//192.168.0.100:8080/modeler.html?modelId=${process.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
+          this.modelerUrl = `//127.0.0.1:8080/modeler.html?modelId=${process.modelId}&time=${new Date().getTime()}&accessToken=${this.getToken()}`
         }
       })
       this.initTabContent()

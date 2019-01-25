@@ -200,7 +200,7 @@ export default {
     },
     showModel(params) {
       this.modal = true;
-      this.modelerUrl = `//192.168.0.100:8080/modeler.html?modelId=${
+      this.modelerUrl = `//127.0.0.1:8080/modeler.html?modelId=${
         params.row.id
       }&time=${new Date().getTime()}`;
     },

@@ -7,3 +7,11 @@ export const getTree = (params) => {
     params
   })
 }
+
+export const addDepartment = (data) => {
+  return axios.request({
+    url: 'department/add',
+    method: 'post',
+    data
+  })
+}

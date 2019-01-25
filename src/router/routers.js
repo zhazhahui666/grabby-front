@@ -29,58 +29,97 @@ export default [{
     }]
   },
 
+
   {
     path: '/sys-manage',
     name: 'sys-manage',
     component: Main,
     meta: {
-      icon: '_qq',
+      icon: 'md-settings',
       title: '系统管理'
     },
     children: [{
         path: 'user-manage',
         name: 'user-manage',
         meta: {
-          icon: '_qq',
+          icon: 'md-person',
           title: '用户管理'
         },
-        component: () => import('@/view/user-manage/user-manage.vue')
+        component: () => import('@/view/sys-manage/user-manage.vue')
       },
       {
         path: 'permission-manage',
         name: 'permission-manage',
         meta: {
-          icon: '_qq',
-          title: '权限管理'
+          icon: 'md-boat',
+          title: '权限列表'
         },
-        component: () => import('@/view/permission-manage/permission-manage.vue')
+        component: () => import('@/view/sys-manage/permission-manage.vue')
       },
       {
         path: 'role-manage',
         name: 'role-manage',
         meta: {
-          icon: '_qq',
+          icon: 'md-people',
           title: '角色管理'
         },
-        component: () => import('@/view/role-manage/role-manage.vue')
+        component: () => import('@/view/sys-manage/role-manage.vue')
       },
       {
         path: 'department-manage',
         name: 'department-manage',
         meta: {
-          icon: '_qq',
+          icon: 'md-git-network',
           title: '组织管理'
         },
-        component: () => import('@/view/department-manage/department-manage.vue')
+        component: () => import('@/view/sys-manage/department-manage.vue')
+      },
+      {
+        path: 'dict-manage',
+        name: 'dict-manage',
+        meta: {
+          icon: 'logo-buffer',
+          title: '数据字典'
+        },
+        component: () => import('@/view/sys-manage/dict-manage.vue')
       }
     ]
 
+  },
+
+  {
+    path: '/sys-monitor',
+    name: 'sys-monitor',
+    component: Main,
+    meta: {
+      icon: 'md-eye',
+      title: '系统监控'
+    },
+    children: [{
+        path: 'swagger',
+        name: 'swagger',
+        meta: {
+          icon: 'ios-document',
+          title: '接口文档'
+        },
+        component: () => import('@/view/sys-monitor/swagger.vue')
+      },
+      {
+        path: 'druid',
+        name: 'druid',
+        meta: {
+          icon: 'md-easel',
+          title: '数据库监控'
+        },
+        component: () => import('@/view/sys-monitor/druid.vue')
+      }
+    ]
   },
   {
     path: '/activiti',
     name: 'activiti',
     meta: {
-      icon: '_qq',
+      icon: 'md-git-compare',
       title: '工作流'
     },
     component: Main,
@@ -88,7 +127,7 @@ export default [{
         path: 'process-list',
         name: 'process-list',
         meta: {
-          icon: '_qq',
+          icon: 'md-add',
           title: '新建流程'
         },
         component: () => import('@/view/activiti/process-list.vue')
@@ -97,7 +136,7 @@ export default [{
         path: 'todo-list',
         name: 'todo-list',
         meta: {
-          icon: '_qq',
+          icon: 'md-appstore',
           title: '待办任务'
         },
         component: () => import('@/view/activiti/todo-list.vue')
@@ -106,7 +145,7 @@ export default [{
         path: 'done-list',
         name: 'done-list',
         meta: {
-          icon: '_qq',
+          icon: 'md-done-all',
           title: '已办任务'
         },
         component: () => import('@/view/activiti/done-list.vue')
@@ -115,7 +154,7 @@ export default [{
         path: 'apply-list',
         name: 'apply-list',
         meta: {
-          icon: '_qq',
+          icon: 'md-open',
           title: '我的申请'
         },
         component: () => import('@/view/activiti/apply-list.vue')
@@ -124,8 +163,8 @@ export default [{
         path: 'process-manage',
         name: 'process-manage',
         meta: {
-          icon: '_qq',
-          title: '流程管理'
+          icon: 'md-cog',
+          title: '流程设置'
         },
         component: () => import('@/view/activiti/process-manage.vue')
       },
@@ -141,7 +180,20 @@ export default [{
     ]
   },
 
-
+  {
+    path: '/document-center',
+    name: 'document-center',
+    component: Main,
+    children: [{
+      path: 'document',
+      name: 'document',
+      meta: {
+        icon: 'md-document',
+        title: '文档中心'
+      },
+      component: () => import('@/view/document/document.vue')
+    }, ]
+  },
   {
     path: '/study',
     name: 'study',
@@ -170,9 +222,6 @@ export default [{
       }
     ]
   },
-
-  
-
   {
     path: '/user',
     name: 'user',
@@ -188,8 +237,17 @@ export default [{
         icon: '_qq',
         title: '个人中心'
       },
-      component: () => import('@/view/user-manage/user-detail.vue')
+      component: () => import('@/view/sys-manage/user-detail.vue')
     }]
+  },
+  {
+    path: '/document-edit',
+    name: 'document-edit',
+    meta: {
+      hideInMenu: true,
+      notCache: true
+    },
+    component: () => import('@/view/document/document-edit.vue')
   },
 
   {

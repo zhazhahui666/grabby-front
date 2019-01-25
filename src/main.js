@@ -9,7 +9,8 @@ import {formatDate} from '@/libs/date'
 import {
   setToken,
   getToken,
-  setStore
+  setStore,
+  clearObj
 } from '@/libs/util'
 
 
@@ -44,6 +45,7 @@ Vue.prototype.$config = config
 Vue.prototype.setToken = setToken
 Vue.prototype.getToken = getToken
 Vue.prototype.setStore = setStore
+Vue.prototype.clearObj = clearObj
 
 
 
