@@ -49,7 +49,14 @@ export const hasChild = (item) => {
  */
 export const clearObj = obj => {
   for (let key in obj) {
-    obj[key] = ''
+    console.log(11111);
+    console.log(typeof obj[key]);
+    if (typeof obj[key] === 'number') {
+      obj[key] = 0
+    } else {
+      obj[key] = ''
+    }
+
   }
 }
 

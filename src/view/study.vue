@@ -1,9 +1,7 @@
 <template>
   <div>
 
-    <Tree :data="data2" show-checkbox></Tree>
-    <Button type="primary" @click="handleClick">点击</Button>
-    <img src="http://127.0.0.1:8080/act-process/get-process-image/125041?accessToken=eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJqaW5nbGkxIiwiZXhwIjoxNTQ3Nzg3OTM4fQ.TMEEtzvek2dvlxz0rZa-A8yCCLfv5azFTTpTH75tKR57mgRcnM0BPVINiV-JFURTKFitjXnulRTg3KkvgdkXMg" alt="">
+   <Icon type="ios-add-circle-outline" />
   </div>
 
 </template>

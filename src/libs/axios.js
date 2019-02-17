@@ -58,7 +58,13 @@ class HttpRequest {
       if (!config.url.includes('user/login')) {
         config.headers['accessToken'] = getToken()
       }
-      if (config.method === 'post' || 'put') {
+
+      //文件上传
+      if (config.isMultipart) {
+        config.headers = {
+          'Content-Type': 'multipart/form-data'
+        }
+      } else if (config.method === 'post' || 'put') {
         //处理成表单形式参数
         config.transformRequest = [function (data) {
           let ret = '';
@@ -69,8 +75,6 @@ class HttpRequest {
           return ret;
         }]
       }
-
-
       return config
     }, error => {
       return Promise.reject(error)

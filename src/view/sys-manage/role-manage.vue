@@ -65,7 +65,7 @@
               </row>
               <row v-else>暂无数据</row>
             </TabPane>
-            <TabPane label="成员列表" icon="md-person" name="people">
+            <TabPane label="成员列表" icon="md-people" name="people">
               <div style="padding-left:5px">
                 <row class="row">
                   <Button type="primary" class="action-btn" icon="md-person-add" @click="userAddModalShow">添加成员</Button>
@@ -159,6 +159,14 @@ export default {
           {
             title: "用户名",
             key: "username"
+          },
+          {
+            title: "姓名",
+            key: "realname"
+          },
+          {
+            title: "部门",
+            key: "departmentName"
           },
           {
             title: "电话",

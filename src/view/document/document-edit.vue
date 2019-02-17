@@ -2,12 +2,13 @@
   <div class="document-wrapper">
     <div v-show="currentAction === 'view' || currentAction === 'preview'">
       <div class="header">
+
         <div class="title">
-          <H2>{{document.title}}</H2>
+         <Icon type="md-document" size="35" />
+          <H2> {{document.title}}</H2>
         </div>
         <div class="btn-wrapper">
           <Button type="primary" @click="currentAction='edit'">编辑</Button>
-          <Button @click="commit">提交</Button>
         </div>
       </div>
       <div class="content">
@@ -17,8 +18,10 @@
     <div v-show="currentAction === 'edit'">
       <div class="header">
         <div class="title">
+          <Icon type="md-document" size="35" />
           <span>文档标题：</span>
-          <input v-model="document.title" placeholder="请输入文档标题" style="width: 300px" />
+          <input v-model="document.title" placeholder="请输入文档标题" style="width: 300px"
+          />
         </div>
 
         <div class="btn-wrapper">
@@ -94,6 +97,7 @@ export default {
     commit() {
       saveOrUpdate(this.document).then(res => {
         this.$Message.success("提交成功")
+        this.currentAction = 'preview'
       })
     }
 
@@ -104,8 +108,8 @@ export default {
 </script>
 
 <style lang="less"  scoped>
-.document-wrapper{
-  font:initial;
+.document-wrapper {
+  font: initial;
 }
 .header {
   height: 50px;

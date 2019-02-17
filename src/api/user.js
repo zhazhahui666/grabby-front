@@ -1,9 +1,17 @@
 import axios from '@/libs/api.request'
+import config from '@/config'
+const baseUrl = process.env.NODE_ENV === 'development' ? config.baseUrl.dev : config.baseUrl.pro
 
-export const login = ({ username, password }) => {
+export const login = ({
+  username,
+  password
+}) => {
   return axios.request({
     url: 'user/login',
-    data:{ username, password },
+    data: {
+      username,
+      password
+    },
     method: 'post'
   })
 }
@@ -35,7 +43,7 @@ export const addUser = (user) => {
   return axios.request({
     url: 'user/add',
     method: 'post',
-    data:user
+    data: user
   })
 }
 
@@ -43,7 +51,7 @@ export const addUser = (user) => {
 
 export const resetPassword = (uid) => {
   return axios.request({
-    url: 'user/reset_password/'+uid,
+    url: 'user/reset_password/' + uid,
     method: 'get',
   })
 }
@@ -58,3 +66,17 @@ export const selfUpdate = (data) => {
     data
   })
 }
+
+//下载导入模板
+export const downloadTemplateUrl  =`${baseUrl}/api/user/download-import-template`
+
+export const importUser = (data) => {
+  return axios.request({
+    url: '/user/import',
+    method: 'post',
+    data,
+    isMultipart:true
+  })
+}
+
+

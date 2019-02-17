@@ -14,7 +14,7 @@ export default{
    */
   baseUrl: {
     dev: '/api',
-    pro: 'https://qnzhazhahui.cn'
+    pro: 'http://qnzhazhahui.cn'
   },
   /**
    * @description 默认打开的首页的路由name值，默认为home

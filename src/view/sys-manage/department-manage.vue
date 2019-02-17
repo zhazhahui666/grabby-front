@@ -11,7 +11,7 @@
         <div class='content-wrapper'>
           <!-- <Tabs @on-click="handleTabClick" value="tableValue"> -->
           <Tabs type="card">
-            <TabPane label="部门信息" icon="logo-apple" name='info'>
+            <TabPane label="部门信息" icon="md-information-circle" name='info'>
               <!-- <p>{{department.id}}</p>
               <p>{{department.name}}</p>
               <p>{{department.description}}</p> -->
@@ -22,15 +22,17 @@
                 </FormItem>
                 <FormItem label="描述：">
                   <!-- <Input v-model="department.name" style="width: 200px"></Input> -->
-                  <span>{{department.description}}</span>
+                  <span v-if="department.description">{{department.description}}</span>
+                  <span v-else>空</span>
                 </FormItem>
                 <FormItem label="排序：">
                   <!-- <Input v-model="department.name" style="width: 200px"></Input> -->
-                  <span>{{department.rank}}</span>
+                  <span v-if="department.rank">{{department.rank}}</span>
+                  <span v-else>空</span>
                 </FormItem>
               </Form>
             </TabPane>
-            <TabPane label="部门成员" icon="logo-windows" name='people'>
+            <TabPane label="部门成员" icon="md-people" name='people'>
               <!-- 数据表格 -->
               <Row>
                 <Table border :columns="columns" :data="dataList"></Table>
@@ -38,12 +40,13 @@
 
               <!-- 分页 -->
               <Row type="flex" justify="end" class="page">
-                <Page :total="totalCount" show-elevator show-sizer show-total @on-change="changePage"
-                  size="small" @on-page-size-change="changePageSize" />
+                <Page :total="totalCount" show-elevator show-sizer show-total
+                  @on-change="changePage" size="small" @on-page-size-change="changePageSize"
+                />
               </Row>
 
             </TabPane>
-            <Button type="primary" slot="extra" class="action-btn" @click="importUser">人员导入</Button>
+            <Button type="primary" slot="extra" class="action-btn" @click="handleImportUser">人员导入</Button>
             <Button type="primary" slot="extra" class="action-btn" @click="userModal = true">添加人员</Button>
             <Button type="primary" slot="extra" class="action-btn" @click="handleAddDepartment(department.pid,'新建同级部门')">新建同级部门</Button>
             <Button type="primary" slot="extra" class="action-btn" @click="handleAddDepartment(department.id,'新建下级部门')">新建下级部门</Button>
@@ -53,7 +56,8 @@
       </Row>
     </card>
 
-    <Modal v-model="userModal" @on-ok="userModalOk" :loading="loading" title="添加用户">
+    <Modal v-model="userModal" @on-ok="userModalOk" :loading="loading"
+      title="添加用户">
       <Form :model="user" :label-width="80">
         <FormItem label="用户名：">
           <Input v-model="user.username" style="width: 300px"></Input>
@@ -83,8 +87,8 @@
       </Form>
     </Modal>
 
-    <Modal v-model="departmentModal.show" @on-ok="addDepartmentOk" :loading="loading"
-      :title="departmentModal.title">
+    <Modal v-model="departmentModal.show" @on-ok="addDepartmentOk"
+      :loading="loading" :title="departmentModal.title">
       <Form :model="departmentModal.department" :label-width="80">
         <!-- <FormItem label="父id：">
           <Input v-model="departmentModal.department.pid" style="width: 300px"></Input>
@@ -96,11 +100,46 @@
           <Input type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="请输入部门描述"
             v-model="departmentModal.department.description" style="width: 300px"></Input>
         </FormItem>
-         <FormItem label="排序：">
-          <Input v-model="departmentModal.department.rank" style="width: 300px"></Input>
+        <FormItem label="排序：">
+          <!-- <Input v-model="departmentModal.department.rank" style="width: 300px"></Input> -->
+          <InputNumber :max="1000" :min="0" :step="0.8" :value="departmentModal.department.rank"></InputNumber>
         </FormItem>
 
       </Form>
+    </Modal>
+
+    <Modal v-model="importUserModal.show" title="人员导入">
+
+      <Upload type="drag" action="#" :before-upload="handleUpload">
+        <div style="padding: 20px 0">
+          <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
+          <p>点击或者拖拽文件至此处上传</p>
+        </div>
+      </Upload>
+      <div v-if="importUserModal.file !== null" class="file-tip">
+        已选择文件: {{ importUserModal.file.name }}
+      </div>
+      <div class="message-wrapper">
+        <p v-if="importUserModal.message">
+          <Icon style="color:#ed4014;" type="md-close-circle" size="13"
+            v-if="importUserModal.error && importUserModal.error.length"
+          />
+          <Icon style="color:#19be6b;" type="md-checkmark-circle" size="13"
+            v-else/> {{importUserModal.message}}：
+        </p>
+        <ul v-if="importUserModal.error && importUserModal.error.length"
+          class="error-msg">
+          <li v-for="item in importUserModal.error">第{{item.row}}行,{{item.message}}</li>
+        </ul>
+      </div>
+
+      <div slot="footer">
+        <Button @click="importUserModal.show=false">关闭</Button>
+        <Button>
+          <a href="/api/user/download-import-template" style="color: #515a6e">下载模板</a>
+        </Button>
+        <Button type="primary" @click="importUserOk" :loading="importUserModal.loading">导入</Button>
+      </div>
     </Modal>
 
   </div>
@@ -109,7 +148,8 @@
 
 <script>
 import { getTree, addDepartment } from '@/api/department'
-import { getUserPage, addUser } from '@/api/user'
+import { getUserPage, addUse, importUser, downloadTemplateUrl } from '@/api/user'
+import responseCode from '@/libs/response.code'
 
 export default {
   mounted() {
@@ -139,8 +179,15 @@ export default {
           name: '',
           pid: '',
           description: '',
-          rank: ''
+          rank: 1
         }
+      },
+      importUserModal: {
+        show: false,
+        file: null,
+        loading: false,
+        error: [],
+        message: ""
       },
       columns: [{
         title: '用户名',
@@ -188,6 +235,7 @@ export default {
 
         //初始化默认选择根节点的数据
         this.$nextTick(function () {
+          console.log(222222);
           let selectArr = this.$refs.departmentTree.getSelectedNodes()
           if (selectArr && selectArr.length > 0) {
             this.department.id = selectArr[0].id
@@ -207,8 +255,8 @@ export default {
           pid: pid,
           rank: rank,
           description: description,
-          expand: pid === 0 ? true : false,
-          selected: pid === 0 ? true : false,
+          expand: pid ? false : true,
+          selected: pid ? false : true,
           children: this.transferData2Tree(children)
         }))
       } else {
@@ -279,14 +327,40 @@ export default {
         this.departmentModal.department.name = ''
         this.departmentModal.department.pid = ''
         this.departmentModal.department.description = ''
-        this.departmentModal.department.rank = ''
+        this.departmentModal.department.rank = 1
       })
     },
     //人员导入
-    importUser(){
-      this.$Message.warning("待开发")
+    handleImportUser() {
+      // this.$Message.warning("待开发")
+      this.importUserModal.show = true
+      this.importUserModal.error = []
+      this.importUserModal.message = ''
+    },
+    importUserOk() {
+      //todo 执行上传文件 this.importUserModal.file
+      let formData = new FormData()
+      formData.append('file', this.importUserModal.file)
+      importUser(formData).then(res => {
+        this.importUserModal.message = res.message
+        if (res.code === responseCode.IMPORT_USER_ERROR) {
+          this.importUserModal.error = res.data
+        } else {
+          this.importUserModal.error = []
+          // this.$Notice.success({
+          //   title: '导入人员成功',
+          //   desc: `${res.message}`,
+          //   duration: 5
+          // });
+        }
+      })
+    },
+    handleUpload(file) {
+      this.importUserModal.file = file;
+      return false;
     }
-    
+
+
 
     // //tab栏点击事件
     // handleTabClick(name) {
@@ -299,5 +373,19 @@ export default {
 </script>
 
 <style lang="less"  scoped>
+.file-tip {
+  font-weight: bold;
+}
+.message-wrapper {
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    color: #ed4014;
+  }
+  p {
+    font-weight: bold;
+  }
+}
 </style>
 

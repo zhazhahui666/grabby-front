@@ -16,6 +16,7 @@ export default [{
     redirect: '/home',
     component: Main,
     meta: {
+      title: '首页',
       hideInMenu: true,
     },
     children: [{
@@ -23,6 +24,7 @@ export default [{
       name: 'home',
       meta: {
         hideInMenu: true,
+        title: '首页',
         notCache: true
       },
       component: () => import('@/view/single-page/home')
@@ -250,31 +252,31 @@ export default [{
     component: () => import('@/view/document/document-edit.vue')
   },
 
-  {
-    path: '/401',
-    name: 'error_401',
-    meta: {
-      icon: '_qq',
-      title: '401页面'
-    },
-    component: () => import('@/view/error-page/401.vue')
-  },
-  {
-    path: '/500',
-    name: 'error_500',
-    meta: {
-      icon: '_qq',
-      title: '500页面'
-    },
-    component: () => import('@/view/error-page/500.vue')
-  },
-  {
-    path: '*',
-    name: 'error_404',
-    meta: {
-      icon: '_qq',
-      title: '404页面'
-    },
-    component: () => import('@/view/error-page/404.vue')
-  }
+  // {
+  //   path: '/401',
+  //   name: 'error_401',
+  //   meta: {
+  //     icon: '_qq',
+  //     title: '401页面'
+  //   },
+  //   component: () => import('@/view/error-page/401.vue')
+  // },
+  // {
+  //   path: '/500',
+  //   name: 'error_500',
+  //   meta: {
+  //     icon: '_qq',
+  //     title: '500页面'
+  //   },
+  //   component: () => import('@/view/error-page/500.vue')
+  // },
+  // {
+  //   path: '*',
+  //   name: 'error_404',
+  //   meta: {
+  //     icon: '_qq',
+  //     title: '404页面'
+  //   },
+  //   component: () => import('@/view/error-page/404.vue')
+  // }
 ]

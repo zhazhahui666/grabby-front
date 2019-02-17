@@ -36,3 +36,20 @@ export const saveOrUpdateDict = (data) => {
     data
   })
 }
+
+//新增或者修改选项
+export const saveOrUpdateOption = (data) => {
+  return axios.request({
+    url: `dict/save-or-update-option`,
+    method: 'post',
+    data
+  })
+}
+
+//删除选项
+export const deleteOption = (optionId) => {
+  return axios.request({
+    url: `dict/delete-option/${optionId}`,
+    method: 'delete',
+  })
+}
